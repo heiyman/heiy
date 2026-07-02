@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Line — a two-person channel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="manifest" href="/manifest.json" />
+<meta name="theme-color" content="#1B2430" />
+</head>
+<body>
+
+<!-- SETUP VIEW: first run only, creates the fixed pair -->
+<section id="view-setup" class="view hidden">
+  <div class="card">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <span class="brand-name">Line</span>
+    </div>
+    <h1>Set up this channel</h1>
+    <p class="sub">Line connects exactly two people. Once set, the pair can't be changed from here — enter both usernames now.</p>
+
+    <label>Your username (this account will have log access)
+      <input id="setup-admin" type="text" placeholder="e.g. ju" autocomplete="off" />
+    </label>
+    <label>The other person's username
+      <input id="setup-employee" type="text" placeholder="e.g. worker" autocomplete="off" />
+    </label>
+
+    <div class="notice">
+      <strong>Disclosure, not surveillance.</strong> This channel keeps a full record of every message,
+      including ones deleted from the chat view. Both people will see that notice every time they open Line.
+      There is no hidden mode.
+    </div>
+
+    <button id="setup-submit" class="btn-primary">Create channel</button>
+    <p id="setup-error" class="error hidden"></p>
+  </div>
+</section>
+
+<!-- LOGIN VIEW -->
+<section id="view-login" class="view hidden">
+  <div class="card">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <span class="brand-name">Line</span>
+    </div>
+    <h1>Sign in</h1>
+    <p class="sub">No password — just the username set up for this channel.</p>
+    <label>Username
+      <input id="login-username" type="text" placeholder="Your username" autocomplete="off" />
+    </label>
+    <button id="login-submit" class="btn-primary">Enter</button>
+    <p id="login-error" class="error hidden"></p>
+  </div>
+</section>
+
+<!-- CHAT VIEW -->
+<section id="view-chat" class="view hidden">
+  <header class="chat-header">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <span class="brand-name">Line</span>
+    </div>
+    <div class="header-right">
+      <span id="conn-status" class="conn-status online">Online</span>
+      <span id="peer-label" class="peer-label"></span>
+      <a id="admin-link" class="admin-link hidden" href="/admin.html">Activity log</a>
+      <button id="logout-btn" class="btn-ghost">Sign out</button>
+    </div>
+  </header>
+
+  <div class="record-banner">
+    <span class="record-dot"></span>
+    This conversation is logged for business records — full history, including deleted messages, is visible to the channel admin.
+  </div>
+  <div id="offline-banner" class="offline-banner hidden">
+    No connection — messages you send now are saved on this device and will go out automatically once you're back online.
+  </div>
+
+  <main id="messages" class="messages"></main>
+
+  <form id="composer" class="composer">
+    <label class="attach-btn" title="Attach image or video">
+      <input type="file" id="file-input" accept="image/*,video/*" hidden />
+      <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M16.5 6.5v9a4.5 4.5 0 0 1-9 0v-10a3 3 0 0 1 6 0v9.5a1.5 1.5 0 0 1-3 0v-8.5h-1.5v8.5a3 3 0 0 0 6 0v-9.5a4.5 4.5 0 0 0-9 0v10a6 6 0 0 0 12 0v-9z"/></svg>
+    </label>
+    <div id="file-preview" class="file-preview hidden">
+      <span id="file-name"></span>
+      <button type="button" id="file-clear">&times;</button>
+    </div>
+    <input id="text-input" type="text" placeholder="Write a message…" autocomplete="off" />
+    <button type="submit" class="btn-send">Send</button>
+  </form>
+</section>
+
+<!-- Lightbox for viewing media full-size -->
+<div id="lightbox" class="lightbox hidden">
+  <div class="lightbox-inner"></div>
+</div>
+
+<script src="/js/outbox.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>
